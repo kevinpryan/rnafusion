@@ -37,8 +37,10 @@ workflow BUILD_REFERENCES {
     ENSEMBL_DOWNLOAD.out.fasta
         .map { it -> tuple(id:it.baseName, it) }
         .set { ch_fasta_w_meta }
-
-    SAMTOOLS_FAIDX(ch_fasta_w_meta)
+    ch_fasta_w_meta.into { ch_fasta_w_meta1; ch_fasta_w_meta2 }
+    println "print out ch_fasta_w_meta1"
+    ch_fasta_w_meta1.view()
+    SAMTOOLS_FAIDX(ch_fasta_w_meta2)
     GATK4_CREATESEQUENCEDICTIONARY(ENSEMBL_DOWNLOAD.out.fasta)
 
         ENSEMBL_DOWNLOAD.out.gtf
@@ -49,7 +51,7 @@ workflow BUILD_REFERENCES {
 
     GATK4_BEDTOINTERVALLIST(CONVERT2BED.out.bed, GATK4_CREATESEQUENCEDICTIONARY.out.dict)
 
-
+    /*
     if (params.starindex || params.all || params.starfusion || params.arriba || params.squid ) {
         STAR_GENOMEGENERATE( ENSEMBL_DOWNLOAD.out.fasta, ENSEMBL_DOWNLOAD.out.gtf )
     }
@@ -83,6 +85,7 @@ workflow BUILD_REFERENCES {
     if (params.fusionreport || params.all) {
         FUSIONREPORT_DOWNLOAD( params.cosmic_username, params.cosmic_passwd )
     }
+    */
 
 }
 
