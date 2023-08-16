@@ -51,7 +51,7 @@ workflow BUILD_REFERENCES {
 
     GATK4_BEDTOINTERVALLIST(CONVERT2BED.out.bed, GATK4_CREATESEQUENCEDICTIONARY.out.dict)
 
-    /*
+    
     if (params.starindex || params.all || params.starfusion || params.arriba || params.squid ) {
         STAR_GENOMEGENERATE( ENSEMBL_DOWNLOAD.out.fasta, ENSEMBL_DOWNLOAD.out.gtf )
     }
@@ -85,7 +85,7 @@ workflow BUILD_REFERENCES {
     if (params.fusionreport || params.all) {
         FUSIONREPORT_DOWNLOAD( params.cosmic_username, params.cosmic_passwd )
     }
-    */
+    
 
 }
 
